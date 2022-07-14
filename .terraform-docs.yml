@@ -1,19 +1,32 @@
 formatter: markdown
 
+content: |-
+  ## Usage
+  ```hcl
+  {{ include "examples/complete/main.tf" }}
+  ```
+  {{ .Requirements }}
+  {{ .Providers }}
+  {{ .Modules }}
+  {{ .Resources }}
+  {{ .Inputs }}
+  {{ .Outputs }}
+
 output:
   file: README.md
   mode: replace
-  template: |-
+  content: |-
     ## Usage
 
     ```hcl
-    module "your_aweasome_resource" {
-      source    = ""
-      namespace = "sweetops"
-      stage     = "production"
-      name      = "aweasome"
-    }
+    {{ include "examples/basic/main.tf" }}
     ```
+  template: |-
+    # terraform-aws-mwaa
+
+    Terraform module to provision Amazon Managed Workflows for Apache Airflow (MWAA)
+
+    __NOTE:__ This module is a hard fork of [CloudPosse's terraform module](https://github.com/cloudposse/terraform-aws-mwaa)
 
     <!-- BEGIN_TF_DOCS -->
     {{ .Content }}
