@@ -10,12 +10,12 @@ output "execution_role_arn" {
 
 output "arn" {
   description = "The ARN of the Amazon MWAA Environment"
-  value       = join("", aws_mwaa_environment.default.*.arn)
+  value       = one(aws_mwaa_environment.default[*].arn)
 }
 
 output "created_at" {
   description = "The Created At date of the Amazon MWAA Environment"
-  value       = join("", aws_mwaa_environment.default.*.created_at)
+  value       = one(aws_mwaa_environment.default[*].created_at)
 }
 
 output "logging_configuration" {
@@ -25,12 +25,12 @@ output "logging_configuration" {
 
 output "service_role_arn" {
   description = "The Service Role ARN of the Amazon MWAA Environment"
-  value       = join("", aws_mwaa_environment.default.*.service_role_arn)
+  value       = one(aws_mwaa_environment.default[*].service_role_arn)
 }
 
 output "status" {
   description = "The status of the Amazon MWAA Environment"
-  value       = join("", aws_mwaa_environment.default.*.status)
+  value       = one(aws_mwaa_environment.default[*].status)
 }
 
 output "tags_all" {
@@ -40,20 +40,20 @@ output "tags_all" {
 
 output "webserver_url" {
   description = "The webserver URL of the Amazon MWAA Environment"
-  value       = join("", aws_mwaa_environment.default.*.webserver_url)
+  value       = one(aws_mwaa_environment.default[*].webserver_url)
 }
 
 output "security_group_id" {
-  value       = join("", compact(module.mwaa_security_group.*.id))
+  value       = one(module.mwaa_security_group[*].id)
   description = "The ID of the created security group"
 }
 
 output "security_group_arn" {
-  value       = join("", compact(module.mwaa_security_group.*.arn))
+  value       = one(module.mwaa_security_group[*].arn)
   description = "The ARN of the created security group"
 }
 
 output "security_group_name" {
-  value       = join("", compact(module.mwaa_security_group.*.name))
+  value       = one(module.mwaa_security_group[*].name)
   description = "The name of the created security group"
 }
