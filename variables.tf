@@ -1,4 +1,3 @@
-
 variable "create_s3_bucket" {
   type        = bool
   description = "Enabling or disabling the creatation of an S3 bucket for AWS MWAA"
@@ -9,6 +8,18 @@ variable "create_iam_role" {
   type        = bool
   description = "Enabling or disabling the creatation of a default IAM Role for AWS MWAA"
   default     = true
+}
+
+variable "additionals_managed_policy_arns" {
+  type        = list(any)
+  description = "List of managed policies to attach to the MWAA IAM role"
+  default     = []
+}
+
+variable "additionals_policy_documents" {
+  type        = list(any)
+  description = "List of JSON IAM policy documents to attach to the MWAA IAM role"
+  default     = []
 }
 
 variable "source_bucket_arn" {
@@ -63,6 +74,24 @@ variable "min_workers" {
   type        = number
   description = "The minimum number of workers that you want to run in your environment."
   default     = 1
+}
+
+variable "max_webservers" {
+  type        = number
+  description = "The maximum number of web servers that you want to run in your environment."
+  default     = 2
+}
+
+variable "min_webservers" {
+  type        = number
+  description = "The minimum number of web servers that you want to run in your environment."
+  default     = 2
+}
+
+variable "schedulers" {
+  type        = number
+  description = "The number of schedulers that you want to run in your environment."
+  default     = 2
 }
 
 variable "plugins_s3_object_version" {
@@ -164,4 +193,16 @@ variable "worker_logs_level" {
 variable "subnet_ids" {
   type        = list(string)
   description = "The private subnet IDs in which the environment should be created. MWAA requires two subnets"
+}
+
+variable "startup_script_s3_path" {
+  type        = string
+  description = "The relative path to the script hosted in your bucket. The script runs as your environment starts before starting the Apache Airflow process."
+  default     = null
+}
+
+variable "startup_script_s3_object_version" {
+  type        = string
+  description = "The version of the startup shell script you want to use. You must specify the version ID that Amazon S3 assigns to the file every time you update the script."
+  default     = null
 }
