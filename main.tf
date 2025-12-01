@@ -1,27 +1,25 @@
 locals {
-  enabled                = module.this.enabled
+  enabled = module.this.enabled
+
   security_group_enabled = local.enabled && var.create_security_group
   s3_bucket_enabled      = local.enabled && var.create_s3_bucket
   iam_role_enabled       = local.enabled && var.create_iam_role
-  account_id             = one(data.aws_caller_identity.current[*].account_id)
-  partition              = one(data.aws_partition.current[*].partition)
-  region                 = one(data.aws_region.current[*].name)
+  account_id             = data.aws_caller_identity.current.account_id
+  partition              = data.aws_partition.current.partition
+  region                 = data.aws_region.current.region
   security_group_ids     = var.create_security_group ? concat(var.associated_security_group_ids, [module.mwaa_security_group.id]) : var.associated_security_group_ids
   s3_bucket_arn          = var.create_s3_bucket ? module.mwaa_s3_bucket.bucket_arn : var.source_bucket_arn
   execution_role_arn     = var.create_iam_role ? module.mwaa_iam_role.arn : var.execution_role_arn
+
+  iam_policy_documents = concat(
+    var.additionals_policy_documents,
+    [data.aws_iam_policy_document.this.json]
+  )
 }
 
-data "aws_caller_identity" "current" {
-  count = local.enabled ? 1 : 0
-}
-
-data "aws_partition" "current" {
-  count = local.enabled ? 1 : 0
-}
-
-data "aws_region" "current" {
-  count = local.enabled ? 1 : 0
-}
+data "aws_caller_identity" "current" {}
+data "aws_partition" "current" {}
+data "aws_region" "current" {}
 
 module "s3_label" {
   source  = "cloudposse/label/null"
@@ -194,7 +192,7 @@ module "mwaa_s3_bucket" {
 
 module "mwaa_iam_role" {
   source  = "cloudposse/iam-role/aws"
-  version = "0.17.0"
+  version = "0.22.0"
 
   enabled = local.iam_role_enabled
   principals = {
@@ -206,13 +204,13 @@ module "mwaa_iam_role" {
 
   use_fullname = true
 
-  policy_documents = [
-    data.aws_iam_policy_document.this.json,
-  ]
+  policy_documents = local.iam_policy_documents
 
-  policy_document_count = 1
+  policy_document_count = length(local.iam_policy_documents)
   policy_description    = "AWS MWAA IAM policy"
   role_description      = "AWS MWAA IAM role"
+
+  managed_policy_arns = var.additionals_managed_policy_arns
 
   context = module.iam_label.context
 }
@@ -220,22 +218,27 @@ module "mwaa_iam_role" {
 resource "aws_mwaa_environment" "default" {
   count = local.enabled ? 1 : 0
 
-  name                            = module.this.id
-  airflow_configuration_options   = var.airflow_configuration_options
-  airflow_version                 = var.airflow_version
-  dag_s3_path                     = var.dag_s3_path
-  environment_class               = var.environment_class
-  kms_key                         = var.kms_key
-  max_workers                     = var.max_workers
-  min_workers                     = var.min_workers
-  plugins_s3_object_version       = var.plugins_s3_object_version
-  plugins_s3_path                 = var.plugins_s3_path
-  requirements_s3_object_version  = var.requirements_s3_object_version
-  requirements_s3_path            = var.requirements_s3_path
-  webserver_access_mode           = var.webserver_access_mode
-  weekly_maintenance_window_start = var.weekly_maintenance_window_start
-  source_bucket_arn               = local.s3_bucket_arn
-  execution_role_arn              = local.execution_role_arn
+  name                             = module.this.id
+  airflow_configuration_options    = var.airflow_configuration_options
+  airflow_version                  = var.airflow_version
+  dag_s3_path                      = var.dag_s3_path
+  environment_class                = var.environment_class
+  kms_key                          = var.kms_key
+  max_workers                      = var.max_workers
+  min_workers                      = var.min_workers
+  min_webservers                   = var.environment_class == "mw1.micro" ? 1 : var.min_webservers
+  max_webservers                   = var.environment_class == "mw1.micro" ? 1 : var.max_webservers
+  schedulers                       = var.schedulers
+  plugins_s3_object_version        = var.plugins_s3_object_version
+  plugins_s3_path                  = var.plugins_s3_path
+  requirements_s3_object_version   = var.requirements_s3_object_version
+  requirements_s3_path             = var.requirements_s3_path
+  startup_script_s3_object_version = var.startup_script_s3_object_version
+  startup_script_s3_path           = var.startup_script_s3_path
+  webserver_access_mode            = var.webserver_access_mode
+  weekly_maintenance_window_start  = var.weekly_maintenance_window_start
+  source_bucket_arn                = local.s3_bucket_arn
+  execution_role_arn               = local.execution_role_arn
 
   logging_configuration {
     dag_processing_logs {
@@ -269,12 +272,13 @@ resource "aws_mwaa_environment" "default" {
     subnet_ids         = var.subnet_ids
   }
 
-  tags = module.this.tags
-
   lifecycle {
     ignore_changes = [
+      plugins_s3_object_version,
       requirements_s3_object_version,
-      plugins_s3_object_version
+      startup_script_s3_object_version,
     ]
   }
+
+  tags = module.this.tags
 }

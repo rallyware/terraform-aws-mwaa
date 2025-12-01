@@ -1,46 +1,46 @@
 output "s3_bucket_arn" {
-  description = "ARN of the S3 bucket"
   value       = local.s3_bucket_arn
+  description = "ARN of the S3 bucket"
 }
 
 output "execution_role_arn" {
-  description = "IAM Role ARN for Amazon MWAA Execution Role"
   value       = local.execution_role_arn
+  description = "IAM Role ARN for Amazon MWAA Execution Role"
 }
 
 output "arn" {
-  description = "The ARN of the Amazon MWAA Environment"
   value       = one(aws_mwaa_environment.default[*].arn)
+  description = "The ARN of the Amazon MWAA Environment"
 }
 
 output "created_at" {
-  description = "The Created At date of the Amazon MWAA Environment"
   value       = one(aws_mwaa_environment.default[*].created_at)
+  description = "The Created At date of the Amazon MWAA Environment"
 }
 
 output "logging_configuration" {
-  description = "The Logging Configuration of the Amazon MWAA Environment"
   value       = try(aws_mwaa_environment.default[0].logging_configuration, [])
+  description = "The Logging Configuration of the Amazon MWAA Environment"
 }
 
 output "service_role_arn" {
-  description = "The Service Role ARN of the Amazon MWAA Environment"
   value       = one(aws_mwaa_environment.default[*].service_role_arn)
+  description = "The Service Role ARN of the Amazon MWAA Environment"
 }
 
 output "status" {
-  description = "The status of the Amazon MWAA Environment"
   value       = one(aws_mwaa_environment.default[*].status)
+  description = "The status of the Amazon MWAA Environment"
 }
 
 output "tags_all" {
-  description = "A map of tags assigned to the resource, including those inherited from the provider for the Amazon MWAA Environment"
   value       = try(aws_mwaa_environment.default[0].tags_all, [])
+  description = "A map of tags assigned to the resource, including those inherited from the provider for the Amazon MWAA Environment"
 }
 
 output "webserver_url" {
-  description = "The webserver URL of the Amazon MWAA Environment"
   value       = one(aws_mwaa_environment.default[*].webserver_url)
+  description = "The webserver URL of the Amazon MWAA Environment"
 }
 
 output "security_group_id" {
