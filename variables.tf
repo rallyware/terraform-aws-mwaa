@@ -206,3 +206,21 @@ variable "startup_script_s3_object_version" {
   description = "The version of the startup shell script you want to use. You must specify the version ID that Amazon S3 assigns to the file every time you update the script."
   default     = null
 }
+
+variable "create_timeout" {
+  type        = string
+  description = "Timeout for creating the environment. AWS documents environment creation as taking about twenty to thirty minutes."
+  default     = "120m"
+}
+
+variable "update_timeout" {
+  type        = string
+  description = "Timeout for updating the environment. An Apache Airflow version change is documented as taking up to two hours, and a graceful worker replacement drains for up to twelve hours."
+  default     = "90m"
+}
+
+variable "delete_timeout" {
+  type        = string
+  description = "Timeout for deleting the environment."
+  default     = "90m"
+}
