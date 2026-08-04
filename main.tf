@@ -183,7 +183,7 @@ module "mwaa_security_group" {
 
 module "mwaa_s3_bucket" {
   source  = "cloudposse/s3-bucket/aws"
-  version = "4.3.0"
+  version = "4.15.0"
 
   enabled = local.s3_bucket_enabled
 
@@ -270,6 +270,12 @@ resource "aws_mwaa_environment" "default" {
   network_configuration {
     security_group_ids = local.security_group_ids
     subnet_ids         = var.subnet_ids
+  }
+
+  timeouts {
+    create = var.create_timeout
+    update = var.update_timeout
+    delete = var.delete_timeout
   }
 
   lifecycle {
