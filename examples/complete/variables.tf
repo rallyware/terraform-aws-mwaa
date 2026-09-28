@@ -14,8 +14,8 @@ variable "webserver_access_mode" {
 }
 
 variable "airflow_configuration_options" {
-  description = "Airflow override options"
   type        = any
+  description = "Airflow override options"
 }
 
 variable "airflow_version" {
@@ -35,72 +35,72 @@ variable "environment_class" {
 
 variable "dag_processing_logs_enabled" {
   type        = bool
-  description = "Enabling or disabling the collection of logs for processing DAGs"
   default     = false
+  description = "Enabling or disabling the collection of logs for processing DAGs"
 }
 
 variable "dag_processing_logs_level" {
   type        = string
-  description = "DAG processing logging level. Valid values: CRITICAL, ERROR, WARNING, INFO, DEBUG"
   default     = "INFO"
+  description = "DAG processing logging level. Valid values: CRITICAL, ERROR, WARNING, INFO, DEBUG"
 }
 
 variable "scheduler_logs_enabled" {
   type        = bool
-  description = "Enabling or disabling the collection of logs for the schedulers"
   default     = false
+  description = "Enabling or disabling the collection of logs for the schedulers"
 }
 
 variable "scheduler_logs_level" {
   type        = string
-  description = "Schedulers logging level. Valid values: CRITICAL, ERROR, WARNING, INFO, DEBUG"
   default     = "INFO"
+  description = "Schedulers logging level. Valid values: CRITICAL, ERROR, WARNING, INFO, DEBUG"
 }
 
 variable "task_logs_enabled" {
   type        = bool
-  description = "Enabling or disabling the collection of logs for DAG tasks"
   default     = false
+  description = "Enabling or disabling the collection of logs for DAG tasks"
 }
 
 variable "task_logs_level" {
   type        = string
-  description = "DAG tasks logging level. Valid values: CRITICAL, ERROR, WARNING, INFO, DEBUG"
   default     = "INFO"
+  description = "DAG tasks logging level. Valid values: CRITICAL, ERROR, WARNING, INFO, DEBUG"
 }
 
 variable "webserver_logs_enabled" {
   type        = bool
-  description = "Enabling or disabling the collection of logs for the webservers"
   default     = false
+  description = "Enabling or disabling the collection of logs for the webservers"
 }
 
 variable "webserver_logs_level" {
   type        = string
-  description = "Webserver logging level. Valid values: CRITICAL, ERROR, WARNING, INFO, DEBUG"
   default     = "INFO"
+  description = "Webserver logging level. Valid values: CRITICAL, ERROR, WARNING, INFO, DEBUG"
 }
 
 variable "worker_logs_enabled" {
   type        = bool
-  description = "Enabling or disabling the collection of logs for the workers"
   default     = false
+  description = "Enabling or disabling the collection of logs for the workers"
 }
 
 variable "worker_logs_level" {
   type        = string
-  description = "Workers logging level. Valid values: CRITICAL, ERROR, WARNING, INFO, DEBUG"
   default     = "INFO"
+  description = "Workers logging level. Valid values: CRITICAL, ERROR, WARNING, INFO, DEBUG"
 }
 
 variable "max_workers" {
   type        = number
-  description = "The maximum number of workers that can be automatically scaled up. Value needs to be between 1 and 25"
   default     = 10
+  description = "The maximum number of workers that can be automatically scaled up. Value needs to be between 1 and 25"
 }
 
 variable "min_workers" {
   type        = number
-  description = "The minimum number of workers that you want to run in your environment."
   default     = 1
+  description = "The minimum number of workers that you want to run in your environment."
 }
