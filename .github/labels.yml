@@ -55,3 +55,7 @@
 - color: dfb443
   name: chore
   description: Adding missing tests or correcting existing tests
+
+- color: b60205
+  name: major
+  description: A breaking change that requires a major version bump

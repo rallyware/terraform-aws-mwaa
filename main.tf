@@ -25,8 +25,7 @@ module "s3_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
-  enabled    = local.s3_bucket_enabled
-  attributes = ["s3"]
+  enabled = local.s3_bucket_enabled
 
   context = module.this.context
 }
@@ -207,8 +206,8 @@ module "mwaa_iam_role" {
   policy_documents = local.iam_policy_documents
 
   policy_document_count = length(local.iam_policy_documents)
-  policy_description    = "AWS MWAA IAM policy"
-  role_description      = "AWS MWAA IAM role"
+  policy_description    = var.iam_policy_description
+  role_description      = var.iam_role_description
 
   managed_policy_arns = var.additionals_managed_policy_arns
 
