@@ -1,0 +1,24 @@
+name: Validate Terraform manifests with trivy
+
+on:
+  pull_request:
+
+jobs:
+  trivy:
+    name: trivy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Run trivy
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: config
+          scan-ref: .
+          format: table
+          exit-code: "1"
+          severity: HIGH,CRITICAL
+        env:
+          TRIVY_TF_EXCLUDE_DOWNLOADED_MODULES: "true"
