@@ -3,6 +3,11 @@ output "s3_bucket_arn" {
   description = "ARN of S3 bucket"
 }
 
+output "s3_bucket_id" {
+  value       = module.mwaa.s3_bucket_id
+  description = "Name of S3 bucket"
+}
+
 output "arn" {
   value       = module.mwaa.arn
   description = "ARN of MWAA environment"
@@ -21,6 +26,11 @@ output "security_group_ids" {
 output "execution_role_arn" {
   description = "IAM Role ARN for Amazon MWAA Execution Role"
   value       = module.mwaa.execution_role_arn
+}
+
+output "execution_role_name" {
+  description = "IAM Role name for Amazon MWAA Execution Role"
+  value       = module.mwaa.execution_role_name
 }
 
 output "created_at" {

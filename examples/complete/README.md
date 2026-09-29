@@ -72,8 +72,10 @@ No resources.
 | <a name="output_arn"></a> [arn](#output\_arn) | ARN of MWAA environment |
 | <a name="output_created_at"></a> [created\_at](#output\_created\_at) | The Created At date of the Amazon MWAA Environment |
 | <a name="output_execution_role_arn"></a> [execution\_role\_arn](#output\_execution\_role\_arn) | IAM Role ARN for Amazon MWAA Execution Role |
+| <a name="output_execution_role_name"></a> [execution\_role\_name](#output\_execution\_role\_name) | IAM Role name for Amazon MWAA Execution Role |
 | <a name="output_logging_configuration"></a> [logging\_configuration](#output\_logging\_configuration) | The Logging Configuration of the MWAA Environment |
 | <a name="output_s3_bucket_arn"></a> [s3\_bucket\_arn](#output\_s3\_bucket\_arn) | ARN of S3 bucket |
+| <a name="output_s3_bucket_id"></a> [s3\_bucket\_id](#output\_s3\_bucket\_id) | Name of S3 bucket |
 | <a name="output_security_group_ids"></a> [security\_group\_ids](#output\_security\_group\_ids) | ID of the MWAA Security Group(s) |
 | <a name="output_service_role_arn"></a> [service\_role\_arn](#output\_service\_role\_arn) | The Service Role ARN of the Amazon MWAA Environment |
 | <a name="output_status"></a> [status](#output\_status) | The status of the Amazon MWAA Environment |

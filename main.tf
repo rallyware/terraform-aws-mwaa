@@ -11,6 +11,9 @@ locals {
   s3_bucket_arn          = var.create_s3_bucket ? module.mwaa_s3_bucket.bucket_arn : var.source_bucket_arn
   execution_role_arn     = var.create_iam_role ? module.mwaa_iam_role.arn : var.execution_role_arn
 
+  s3_bucket_id        = var.create_s3_bucket ? module.mwaa_s3_bucket.bucket_id : try(basename(provider::aws::arn_parse(var.source_bucket_arn).resource), null)
+  execution_role_name = var.create_iam_role ? module.mwaa_iam_role.name : try(basename(provider::aws::arn_parse(var.execution_role_arn).resource), null)
+
   iam_policy_documents = concat(
     var.additionals_policy_documents,
     [data.aws_iam_policy_document.this.json]
