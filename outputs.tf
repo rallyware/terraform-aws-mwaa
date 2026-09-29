@@ -3,9 +3,19 @@ output "s3_bucket_arn" {
   description = "ARN of the S3 bucket"
 }
 
+output "s3_bucket_id" {
+  value       = local.s3_bucket_id
+  description = "Name of the S3 bucket"
+}
+
 output "execution_role_arn" {
   value       = local.execution_role_arn
   description = "IAM Role ARN for Amazon MWAA Execution Role"
+}
+
+output "execution_role_name" {
+  value       = local.execution_role_name
+  description = "IAM Role name for Amazon MWAA Execution Role"
 }
 
 output "arn" {
